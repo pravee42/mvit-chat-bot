@@ -1,0 +1,44 @@
+.container1 {
+  position: absolute;
+  bottom:10px;
+  right:10px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 10px;
+  padding:10px;
+}
+
+.button1 {
+  width:50px;
+  height: 50px;
+  border-radius: 100px;
+  background-color: blueviolet;
+  color: antiquewhite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 10px #673ab78a;
+  transition: .2s all ease-in-out;
+}
+
+.button1:hover {
+  box-shadow: -1px 2px 21px #673ab78a;
+}
+
+.bounce {
+  animation: up-down 2s ease-in-out infinite;
+}
+
+@keyframes up-down {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
