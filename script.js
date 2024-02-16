@@ -1,33 +1,95 @@
-const messageList = document.querySelector('.message-list');
-const chatMessageInput = document.getElementById('chat-message');
-const sendMessageButton = document.getElementById('send-message');
+import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
 
-const brainId = 1211; // Replace with your actual brain ID
-const userName = 'praveen'; // Replace with the user's actual name
+const MessageInput = document.querySelector('#MessageInput');
 
-async function sendMessage(message) {
+const MessageList = document.querySelector('#MessageList');
+
+var messagesData = [
+	{
+		user: 'bot',
+		message: 'Welcome to the Manakula Vinayagar Institute of Technology',
+	},
+	{
+		user: 'user',
+		message: 'Hello',
+	},
+];
+
+const sendMessages = async (promot, brainId, name) => {
+	const url = `https://mita.marvelcloudsolutions.tech/chat?brain_id=${brainId}&user_name=${name}&prompt=${promot}`;
+	messagesData.push({ user: 'user', message: promot });
 	try {
-		const response = await axios.get(
-			`https://mita.marvelcloudsolutions.tech/chat?brain_id=1211&user_name=praveen&prompt=${message}`,
-		);
+		const response = await fetch(url);
 
-		const chatbotMessage = response.data.response;
-		addMessage('Chatbot', chatbotMessage);
+		if (!response.ok) {
+			throw new Error('Network response was not ok');
+		}
+
+		const data = await response.json();
+		messagesData.push({ user: 'bot', message: data.message });
 	} catch (error) {
-		console.error(error);
-		addMessage('Error', 'An error occurred while sending your message.');
+		console.error('There was a problem with the fetch operation:', error);
 	}
+};
+
+const displayMessages = async () => {
+	try {
+		messagesData.forEach((data) => {
+			const messageDiv = document.createElement('div');
+			messageDiv.classList.add(
+				data.user === 'user' ? 'message-card-admin' : 'message-card-bot',
+			);
+
+			const profileDiv = document.createElement('div');
+			profileDiv.classList.add(data.user === 'user' ? 'profile' : 'reply');
+
+			const image = document.createElement('img');
+			image.setAttribute(
+				'src',
+				data.user === 'user' ? './images/logo.png' : './images/image2.png',
+			);
+
+			const messageContentDiv = document.createElement('div');
+			messageContentDiv.classList.add('message');
+			messageContentDiv.innerHTML = data.message
+				? marked(data.message)
+				: data.message;
+
+			messageDiv.appendChild(profileDiv);
+			profileDiv.appendChild(image);
+			messageDiv.appendChild(messageContentDiv);
+
+			const wrapperDiv = document.createElement('div');
+			wrapperDiv.classList.add('w-full');
+			wrapperDiv.appendChild(messageDiv);
+			wrapperDiv.appendChild(document.createElement('br'));
+
+			MessageList.appendChild(wrapperDiv);
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+displayMessages();
+
+function generateRandomUUID() {
+	const randomNumber = Math.floor(Math.random() * 9000) + 1000;
+	const uuid = 'UUID-' + randomNumber.toString();
+	return uuid;
 }
 
-sendMessage('hi'); // Initial greeting from the chatbot
+const setBrainData = () => {
+	const brainId = localStorage.getItem('brainId');
+	if (!brainId) {
+		const new_braindId = generateRandomUUID();
+		localStorage.getItem('brainId', new_braindId);
+	}
+};
 
-function addMessage(sender, message) {
-	const messageElement = document.createElement('div');
-	messageElement.classList.add('message');
+setBrainData();
 
-	const senderElement = document.createElement('span');
-	senderElement.classList.add('message-sender');
-	senderElement.textContent = sender;
-
-	sendMessage(chatMessageInput.value);
-}
+document.querySelector('#sendbtn').addEventListener('click', function () {
+	const brainId = localStorage.getItem('brainId');
+	sendMessages(MessageInput.value, brainId, brainId);
+});
