@@ -12,8 +12,8 @@
 	</head>
 	<body>
 		<div class="container1">
-			<div
-				class="h-[500px] border-2 rounded rounded-xl drop-shadow bg-white w-[600px] border-solid p-4 relative"
+			<div id="container11"
+				class="container11 h-[500px] border-2 rounded rounded-xl drop-shadow bg-white w-[600px] border-solid p-4 relative hidden"
 			>
 			<div id="MessageList" class="flex flex-col gap-2 items-start w-100 overflow-auto h-[400px]"></div>
 			<div  class="bottomBox absolute bottom-2">
@@ -23,13 +23,16 @@
 						id="MessageInput"
 						placeholder='Type your questions here'
 					/>
+					<div id="loader" class="absolute w-[30px] h-[30px] right-20 hidden">
+						<img src="./images/loader.gif" alt="Loader">
+					</div>
 					<button id="sendbtn" class="button22 hover:shadow hover:shadow-xl">
 						<i class="bi bi-send text-white"></i>
 					</button>
 				</div>
 			</div>
 			</div>
-			<div class="button1"><i class="bi bi-robot"></i></div>
+			<div id="showBotToogle" class="button1"><i class="bi bi-robot"></i></div>
 		</div>
 	</body>
 	<script type="module" src="script.js"></script>

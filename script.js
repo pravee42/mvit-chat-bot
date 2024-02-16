@@ -7,34 +7,50 @@ const MessageList = document.querySelector('#MessageList');
 var messagesData = [
 	{
 		user: 'bot',
-		message: 'Welcome to the Manakula Vinayagar Institute of Technology',
-	},
-	{
-		user: 'user',
-		message: 'Hello',
+		message: 'Hi I am MITA, How can I Help You?',
 	},
 ];
 
+function scrollToBottom() {
+	MessageList.scrollTop = MessageList.scrollHeight;
+}
+
+const loading = (status) => {
+	const loader = document.querySelector('#loader');
+	if (status === true) {
+		loader.classList.remove('hidden');
+		loader.classList.add('flex');
+		MessageInput.disabled = true;
+		MessageInput.placeholder = 'Thinking...';
+		MessageInput.classList.add('cursor-not-allowed');
+	} else {
+		loader.classList.add('hidden');
+		loader.classList.remove('flex');
+		MessageInput.disabled = false;
+		MessageInput.placeholder = 'Type your questions here';
+	}
+};
+
 const sendMessages = async (promot, brainId, name) => {
+	loading(true);
 	messagesData.push({ user: 'user', message: promot });
-	messagesData.push({ user: 'bot', message: promot });
 	displayMessages();
 
-	// https://mita-spn-relay-sa-3.onrender.com/chat?brain_id={brain_id}&prompt={prompt}&user_name={user_name}
-	// const url = `http://127.0.0.1:5027/chat?brain_id=${brainId}&user_name=${name}&prompt=${promot}`;
-	// messagesData.push({ user: 'user', message: promot });
-	// try {
-	// 	const response = await fetch(url);
+	const url = `http://127.0.0.1:5027/chat?brain_id=${brainId}&user_name=${name}&prompt=${promot}`;
+	try {
+		const response = await fetch(url);
 
-	// 	if (!response.ok) {
-	// 		throw new Error('Network response was not ok');
-	// 	}
+		if (!response.ok) {
+			throw new Error('Network response was not ok');
+		}
 
-	// 	const data = await response.json();
-	// 	messagesData.push({ user: 'bot', message: data.message });
-	// } catch (error) {
-	// 	console.error('There was a problem with the fetch operation:', error);
-	// }
+		const data = await response.json();
+		messagesData.push({ user: 'bot', message: data.message });
+		displayMessages();
+		loading(false);
+	} catch (error) {
+		console.error('There was a problem with the fetch operation:', error);
+	}
 };
 
 const displayMessages = async () => {
@@ -52,7 +68,7 @@ const displayMessages = async () => {
 			const image = document.createElement('img');
 			image.setAttribute(
 				'src',
-				data.user === 'user' ? './images/logo.png' : './images/image2.png',
+				data.user === 'bot' ? './images/logo.jpg' : './images/useravatar.png',
 			);
 
 			const messageContentDiv = document.createElement('div');
@@ -75,6 +91,7 @@ const displayMessages = async () => {
 	} catch (error) {
 		console.log(error);
 	}
+	scrollToBottom();
 };
 
 displayMessages();
@@ -98,4 +115,28 @@ setBrainData();
 document.querySelector('#sendbtn').addEventListener('click', function () {
 	const brainId = localStorage.getItem('brainId');
 	sendMessages(MessageInput.value, brainId, brainId);
+	MessageInput.value = '';
+});
+
+const ShowBotValue = document.querySelector('#container11');
+const showBotToogle = document.querySelector('#showBotToogle');
+
+const ShowBot = () => {
+	console.log('ShowBot');
+	if (ShowBotValue.classList.contains('hidden')) {
+		ShowBotValue.classList.remove('hidden');
+		ShowBotValue.classList.add('block');
+		ShowBotValue.classList.add('fade-in');
+		showBotToogle.innerHTML = '<i class="bi bi-x"></i>';
+		showBotToogle.classList.add('rotate');
+	} else if (ShowBotValue.classList.contains('block')) {
+		ShowBotValue.classList.add('hidden');
+		ShowBotValue.classList.remove('block');
+		showBotToogle.classList.remove('rotate');
+		showBotToogle.innerHTML = '<i class="bi bi-robot"></i>';
+	}
+};
+
+document.querySelector('#showBotToogle').addEventListener('click', function () {
+	ShowBot();
 });
