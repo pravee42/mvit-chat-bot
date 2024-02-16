@@ -16,23 +16,29 @@ var messagesData = [
 ];
 
 const sendMessages = async (promot, brainId, name) => {
-	const url = `https://mita.marvelcloudsolutions.tech/chat?brain_id=${brainId}&user_name=${name}&prompt=${promot}`;
 	messagesData.push({ user: 'user', message: promot });
-	try {
-		const response = await fetch(url);
+	messagesData.push({ user: 'bot', message: promot });
+	displayMessages();
 
-		if (!response.ok) {
-			throw new Error('Network response was not ok');
-		}
+	// https://mita-spn-relay-sa-3.onrender.com/chat?brain_id={brain_id}&prompt={prompt}&user_name={user_name}
+	// const url = `http://127.0.0.1:5027/chat?brain_id=${brainId}&user_name=${name}&prompt=${promot}`;
+	// messagesData.push({ user: 'user', message: promot });
+	// try {
+	// 	const response = await fetch(url);
 
-		const data = await response.json();
-		messagesData.push({ user: 'bot', message: data.message });
-	} catch (error) {
-		console.error('There was a problem with the fetch operation:', error);
-	}
+	// 	if (!response.ok) {
+	// 		throw new Error('Network response was not ok');
+	// 	}
+
+	// 	const data = await response.json();
+	// 	messagesData.push({ user: 'bot', message: data.message });
+	// } catch (error) {
+	// 	console.error('There was a problem with the fetch operation:', error);
+	// }
 };
 
 const displayMessages = async () => {
+	MessageList.innerHTML = '';
 	try {
 		messagesData.forEach((data) => {
 			const messageDiv = document.createElement('div');
@@ -83,7 +89,7 @@ const setBrainData = () => {
 	const brainId = localStorage.getItem('brainId');
 	if (!brainId) {
 		const new_braindId = generateRandomUUID();
-		localStorage.getItem('brainId', new_braindId);
+		localStorage.setItem('brainId', new_braindId);
 	}
 };
 
