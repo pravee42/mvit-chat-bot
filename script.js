@@ -36,7 +36,7 @@ const sendMessages = async (promot, brainId, name) => {
 	messagesData.push({ user: 'user', message: promot });
 	displayMessages();
 
-	const url = `http://mita.marvelcloudsolutions.tech/chat?brain_id=${brainId}&user_name=${name}&prompt=${promot}`;
+	const url = `https://mita.onrender.com/chat?brain_id=${brainId}&user_name=${name}&prompt=${promot}`;
 	// http://mita.marvelcloudsolutions.tech/chat?brain_id=1211&user_name=praveen&prompt=wleocme
 	try {
 		const response = await fetch(url);
