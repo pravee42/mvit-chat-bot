@@ -7,7 +7,7 @@ const MessageList = document.querySelector('#MessageList');
 var messagesData = [
 	{
 		user: 'bot',
-		message: 'Hi I am MITA, How can I Help You? BY Siddarth: ',
+		message: 'Hi I am MITA, How can I Help You?',
 	},
 ];
 
@@ -39,6 +39,7 @@ const loading = (status) => {
 	}
 };
 
+
 const sendMessages = async (promot, brainId, name) => {
 	loading(true);
 	messagesData.push({ user: 'user', message: promot });
@@ -54,7 +55,7 @@ const sendMessages = async (promot, brainId, name) => {
 		}
 
 		const data = await response.json();
-		messagesData.push({ user: 'bot', message: data.message });
+		messagesData.push({ user: 'bot', message: data.message});
 		displayMessages();
 		loading(false);
 	} catch (error) {
