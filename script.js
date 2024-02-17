@@ -7,7 +7,7 @@ const MessageList = document.querySelector('#MessageList');
 var messagesData = [
 	{
 		user: 'bot',
-		message: 'Hi I am MITA, How can I Help You?',
+		message: 'Hi I am MITA, How can I Help You? BY Siddarth: ',
 	},
 ];
 
@@ -106,8 +106,8 @@ const displayMessages = async () => {
 displayMessages();
 
 function generateRandomUUID() {
-	const randomNumber = Math.floor(Math.random() * 9000) + 1000;
-	const uuid = 'UUID-' + randomNumber.toString();
+	const randomNumber = Math.floor(Math.random() * 656565656) + 1245821452;
+	const uuid = 'MANDAI_NUMBER_' + randomNumber.toString();
 	return uuid;
 }
 
@@ -137,7 +137,6 @@ const ShowBotValue = document.querySelector('#container11');
 const showBotToogle = document.querySelector('#showBotToogle');
 
 const ShowBot = () => {
-	console.log('ShowBot');
 	if (ShowBotValue.classList.contains('hidden')) {
 		ShowBotValue.classList.remove('hidden');
 		ShowBotValue.classList.add('block');

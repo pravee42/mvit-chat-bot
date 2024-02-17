@@ -13,13 +13,13 @@
   width:50px;
   height: 50px;
   border-radius: 100px;
-  background-color: blueviolet;
+  background-color: rgb(61, 43, 226);
   color: antiquewhite;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 1px 10px #673ab78a;
+  box-shadow: 0 1px 10px #4d3ab78a;
   transition: .2s all ease-in-out;
 }
 
