@@ -17,16 +17,24 @@ function scrollToBottom() {
 
 const loading = (status) => {
 	const loader = document.querySelector('#loader');
+	const sendButton = document.querySelector('#sendbtn');
 	if (status === true) {
 		loader.classList.remove('hidden');
 		loader.classList.add('flex');
 		MessageInput.disabled = true;
 		MessageInput.placeholder = 'Thinking...';
 		MessageInput.classList.add('cursor-not-allowed');
+		sendButton.classList.add('cursor-not-allowed');
+		sendButton.classList.add('disabled');
+		sendButton.disabled = true;
 	} else {
 		loader.classList.add('hidden');
 		loader.classList.remove('flex');
 		MessageInput.disabled = false;
+		sendButton.disabled = false;
+		sendButton.classList.remove('cursor-not-allowed');
+		MessageInput.classList.remove('cursor-not-allowed');
+		sendButton.classList.remove('disabled');
 		MessageInput.placeholder = 'Type your questions here';
 	}
 };
@@ -114,6 +122,12 @@ const setBrainData = () => {
 setBrainData();
 
 document.querySelector('#sendbtn').addEventListener('click', function () {
+	const brainId = localStorage.getItem('brainId');
+	sendMessages(MessageInput.value, brainId, brainId);
+	MessageInput.value = '';
+});
+
+document.querySelector('#form').addEventListener('submit', function () {
 	const brainId = localStorage.getItem('brainId');
 	sendMessages(MessageInput.value, brainId, brainId);
 	MessageInput.value = '';
