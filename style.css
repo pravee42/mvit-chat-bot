@@ -102,7 +102,7 @@
   background-color: #8bc34a26;
   padding: 4px 10px;
   color: #000000;
-  width: 70%;
+  max-width: 70%;
 }
 
 .message {
@@ -135,7 +135,7 @@ img {
 
 @media screen and (max-width:700px) {
   .container11 {
-    width: 100% !important;
+    width: 90% !important;
   }
 }
 
