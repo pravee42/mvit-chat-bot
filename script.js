@@ -39,6 +39,20 @@ const loading = (status) => {
 	}
 };
 
+async function query(data) {
+	const response = await fetch(
+		'https://api-inference.huggingface.co/models/facebook/bart-large-cnn',
+		{
+			headers: {
+				Authorization: 'Bearer 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',
+			},
+			method: 'POST',
+			body: JSON.stringify(data),
+		},
+	);
+	const result = await response.json();
+	return result;
+}
 
 const sendMessages = async (promot, brainId, name) => {
 	loading(true);
@@ -55,7 +69,19 @@ const sendMessages = async (promot, brainId, name) => {
 		}
 
 		const data = await response.json();
-		messagesData.push({ user: 'bot', message: data.message});
+		const formattedMessage = await marked(data.message);
+		const summarizedMessage = await query({ inputs: formattedMessage });
+		messagesData.push({
+			user: 'bot',
+			message:
+				summarizedMessage[0]?.summary_text
+					?.toLowerCase()
+					.includes('admission') ||
+				summarizedMessage[0]?.summary_text?.toLowerCase().includes('contact')
+					? summarizedMessage[0].summary_text +
+					  `\n for More admission Related Contact: 9498093535`
+					: summarizedMessage[0].summary_text,
+		});
 		displayMessages();
 		loading(false);
 	} catch (error) {
@@ -107,8 +133,13 @@ const displayMessages = async () => {
 displayMessages();
 
 function generateRandomUUID() {
-	const randomNumber = Math.floor(Math.random() * 656565656) + 1245821452;
-	const uuid = 'MANDAI_NUMBER_' + randomNumber.toString();
+	let uuid = '';
+	const characters = '0123456789abcdef';
+
+	for (let i = 0; i < 16; i++) {
+		uuid += characters.charAt(Math.floor(Math.random() * characters.length));
+	}
+
 	return uuid;
 }
 
