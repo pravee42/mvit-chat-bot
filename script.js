@@ -9,6 +9,11 @@ var messagesData = [
 		user: 'bot',
 		message: 'Hi I am MITA, How can I Help You?',
 	},
+	{
+		user: 'bot',
+		message: 'Are you an MIT student?',
+		type: 'question',
+	},
 ];
 
 function scrollToBottom() {
@@ -39,7 +44,6 @@ const loading = (status) => {
 	}
 };
 
-
 const sendMessages = async (promot, brainId, name) => {
 	loading(true);
 	messagesData.push({ user: 'user', message: promot });
@@ -55,7 +59,7 @@ const sendMessages = async (promot, brainId, name) => {
 		}
 
 		const data = await response.json();
-		messagesData.push({ user: 'bot', message: data.message});
+		messagesData.push({ user: 'bot', message: data.message });
 		displayMessages();
 		loading(false);
 	} catch (error) {
@@ -122,16 +126,26 @@ const setBrainData = () => {
 
 setBrainData();
 
-document.querySelector('#sendbtn').addEventListener('click', function () {
-	const brainId = localStorage.getItem('brainId');
-	sendMessages(MessageInput.value, brainId, brainId);
-	MessageInput.value = '';
-});
-
-document.querySelector('#form').addEventListener('submit', function () {
-	const brainId = localStorage.getItem('brainId');
-	sendMessages(MessageInput.value, brainId, brainId);
-	MessageInput.value = '';
+document.querySelector('#form').addEventListener('submit', function (e) {
+	e.preventDefault();
+	if (messagesData[messagesData.length - 1].type === 'question') {
+		messagesData.push({ user: 'user', message: MessageInput.value });
+		displayMessages();
+		MessageInput.value = '';
+		if (!messagesData[messagesData.length - 2].isLast) {
+			messagesData.push({
+				user: 'bot',
+				message: 'Enter Your Enroll Number: (ex: 22xx0000)',
+				type: 'question',
+				isLast: true,
+			});
+			displayMessages();
+		}
+	} else {
+		const brainId = localStorage.getItem('brainId');
+		sendMessages(MessageInput.value, brainId, brainId);
+		MessageInput.value = '';
+	}
 });
 
 const ShowBotValue = document.querySelector('#container11');
