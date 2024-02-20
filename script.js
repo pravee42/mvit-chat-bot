@@ -70,17 +70,15 @@ const sendMessages = async (promot, brainId, name) => {
 
 		const data = await response.json();
 		const formattedMessage = await marked(data.message);
-		const summarizedMessage = await query({ inputs: formattedMessage });
+		// const summarizedMessage = await query({ inputs: formattedMessage });
 		messagesData.push({
 			user: 'bot',
 			message:
-				summarizedMessage[0]?.summary_text
-					?.toLowerCase()
-					.includes('admission') ||
-				summarizedMessage[0]?.summary_text?.toLowerCase().includes('contact')
-					? summarizedMessage[0].summary_text +
+				formattedMessage?.toLowerCase().includes('admission') ||
+				formattedMessage?.toLowerCase().includes('contact')
+					? formattedMessage +
 					  `\n for More admission Related Contact: 9498093535`
-					: summarizedMessage[0].summary_text,
+					: formattedMessage,
 		});
 		displayMessages();
 		loading(false);
