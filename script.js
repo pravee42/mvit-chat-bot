@@ -11,7 +11,7 @@ const userDetails = localStorage.getItem("userDetails")
 var messagesData = [
   {
     user: "bot",
-    message: `Hi I am MITA, "How can I Help You?`,
+    message: `Hi I am MITA, How can I Help You?`,
   },
 ];
 
@@ -191,7 +191,7 @@ async function LoadMessages() {
 
       const data = await response.json();
       const historyMessages = data.history;
-			historyMessages.map(async (chat) => {
+      historyMessages.map(async (chat) => {
         const formattedMessage = await marked(chat.content);
         // const summarizedMessage = await query({ inputs: formattedMessage });
         messagesData.push({
@@ -205,6 +205,7 @@ async function LoadMessages() {
         });
         displayMessages();
         // loading(false);
+        scrollToBottom();
       });
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -270,3 +271,12 @@ if (userDetails) {
   showForm();
   LoadMessages();
 }
+
+async function Clearhistory() {
+  const URL = `https://mita-eng-relay.onrender.com/clear_history?phone=${
+    JSON.parse(localStorage.getItem("userDetails")).contact
+  }`;
+  const res = await fetch(URL);
+}
+
+document.getElementById("clearCache").addEventListener("click", Clearhistory);
