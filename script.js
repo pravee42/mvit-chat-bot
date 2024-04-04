@@ -54,7 +54,7 @@ const sendMessages = async (promot, brainId, name) => {
   }&user_name=${name}&prompt=${promot}&level=student&phone=${
     JSON.parse(localStorage.getItem("userDetails")).contact
   }&email=${JSON.parse(localStorage.getItem("userDetails")).email}`;
-  https: try {
+  try {
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -178,6 +178,40 @@ document.querySelector("#showBotToogle").addEventListener("click", function () {
   ShowBot();
 });
 
+async function LoadMessages() {
+  if (localStorage.getItem("userDetails")) {
+    const data = JSON.parse(localStorage.getItem("userDetails"));
+    const url = `https://mita-eng-relay.onrender.com/history?phone=${data.contact}`;
+    try {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      const historyMessages = data.history;
+			historyMessages.map(async (chat) => {
+        const formattedMessage = await marked(chat.content);
+        // const summarizedMessage = await query({ inputs: formattedMessage });
+        messagesData.push({
+          user: chat.role === "assistant" ? "bot" : "user",
+          message:
+            formattedMessage?.toLowerCase().includes("admission") ||
+            formattedMessage?.toLowerCase().includes("contact")
+              ? formattedMessage +
+                `\n for More admission Related Contact: 9498093535`
+              : formattedMessage,
+        });
+        displayMessages();
+        // loading(false);
+      });
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  }
+}
+
 function showMessages() {
   const MessageList = document.getElementById("MessageList");
   const UserForm = document.getElementById("UserForm");
@@ -203,7 +237,7 @@ function showForm() {
 }
 
 function saveUserDetails(e) {
-	e.preventDefault();
+  e.preventDefault();
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const contact = document.getElementById("contact").value;
@@ -219,6 +253,7 @@ function saveUserDetails(e) {
     };
     localStorage.setItem("userDetails", JSON.stringify(userDetails));
     showMessages();
+    LoadMessages();
   } else {
     alert("Please Fill All the Fields");
   }
@@ -230,6 +265,8 @@ saveUserButton.addEventListener("click", saveUserDetails);
 
 if (userDetails) {
   showMessages();
+  LoadMessages();
 } else {
   showForm();
+  LoadMessages();
 }
