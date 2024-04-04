@@ -202,7 +202,8 @@ function showForm() {
   bottomBox.classList.add("hidden");
 }
 
-function saveUserDetails() {
+function saveUserDetails(e) {
+	e.preventDefault();
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const contact = document.getElementById("contact").value;
