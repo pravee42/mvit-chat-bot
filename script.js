@@ -49,7 +49,9 @@ const sendMessages = async (promot, brainId, name) => {
   displayMessages();
 
   // const url = `https://mita.onrender.com/chat?brain_id=${brainId}&user_name=${name}&prompt=${promot}&level=student&phone=5555555555`;
-  const url = `https://mita-eng-relay.onrender.com/chat?brain_id=${JSON.parse(localStorage.getItem("userDetails")).contact}&user_name=${name}&prompt=${promot}&level=student&phone=${
+  const url = `https://mita-eng-relay.onrender.com/chat?brain_id=${
+    JSON.parse(localStorage.getItem("userDetails")).contact
+  }&user_name=${name}&prompt=${promot}&level=student&phone=${
     JSON.parse(localStorage.getItem("userDetails")).contact
   }&email=${JSON.parse(localStorage.getItem("userDetails")).email}`;
   https: try {
@@ -93,7 +95,7 @@ const displayMessages = async () => {
       const image = document.createElement("img");
       image.setAttribute(
         "src",
-        data.user === "bot" ? "./images/logo.jpg" : "./images/useravatar.png"
+        data.user === "bot" ? "./images/logo.png" : "./images/useravatar.png"
       );
 
       const messageContentDiv = document.createElement("div");
@@ -206,15 +208,19 @@ function saveUserDetails() {
   const contact = document.getElementById("contact").value;
   const level = document.getElementById("level").value;
   const url = `https://mita-eng-relay.onrender.com/saveuser?phone=${contact}&name=${name}&email=${email}&level=${level}`;
-  const res = fetch(url);
-  const userDetails = {
-    name: name,
-    email: email,
-    contact: contact,
-    level: level,
-  };
-  localStorage.setItem("userDetails", JSON.stringify(userDetails));
-  showMessages();
+  if (email !== "" && contact !== "" && level !== "" && name !== "") {
+    const res = fetch(url);
+    const userDetails = {
+      name: name,
+      email: email,
+      contact: contact,
+      level: level,
+    };
+    localStorage.setItem("userDetails", JSON.stringify(userDetails));
+    showMessages();
+  } else {
+    alert("Please Fill All the Fields");
+  }
 }
 
 const saveUserButton = document.getElementById("saveuserDetails");

@@ -26,7 +26,7 @@
           id="MessageList"
           class="flex flex-col gap-2 items-start w-100 overflow-auto h-[600px]"
         ></div>
-        <div
+        <form
           id="UserForm"
           class="flex flex-col gap-4 sm:gap-10 items-center w-full justify-center overflow-auto h-full"
         >
@@ -38,6 +38,7 @@
               >User Name</label
             >
             <input
+              required
               type="text"
               id="name"
               placeholder="Name"
@@ -49,6 +50,7 @@
               >Email</label
             >
             <input
+              required
               type="text"
               placeholder="Email"
               id="email"
@@ -57,9 +59,10 @@
           </div>
           <div class="w-full max-w-md mx-auto">
             <label for="input" class="block text-gray-700 font-bold mb-2"
-              >Contact</label
+              >Phone Number</label
             >
             <input
+              required
               id="contact"
               type="text"
               placeholder="Contact"
@@ -71,6 +74,7 @@
               >Who are you?</label
             >
             <select
+              required
               id="level"
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
@@ -86,7 +90,7 @@
           >
             Continue
           </button>
-        </div>
+        </form>
         <div id="bottomBox" class="bottomBox absolute bottom-0 sm:bottom-2">
           <form id="form" class="inputbox">
             <input
