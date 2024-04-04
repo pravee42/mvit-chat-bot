@@ -1,16 +1,20 @@
+:root {
+  font-family: "Poppins", sans-serif !important;
+}
+
 .container1 {
   position: absolute;
-  bottom:10px;
-  right:10px;
+  bottom: 10px;
+  right: 10px;
   display: flex;
   flex-direction: column;
   align-items: end;
   gap: 10px;
-  padding:10px;
+  padding: 10px;
 }
 
 .button1 {
-  width:50px;
+  width: 50px;
   height: 50px;
   border-radius: 100px;
   background-color: rgb(61, 43, 226);
@@ -20,12 +24,13 @@
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 1px 10px #4d3ab78a;
-  transition: .2s all ease-in-out;
+  transition: 0.2s all ease-in-out;
 }
 
 .bottomBox {
   width: 90%;
 }
+
 .button1:hover {
   box-shadow: -1px 2px 21px #673ab78a;
 }
@@ -78,6 +83,19 @@
   border: 1.01px solid #e5e7eb;
 }
 
+@media screen and (max-width: 600px) {
+  .inputbox input {
+    border-radius: 4px;
+    padding: 4px 22px;
+    height: 40px;
+  }
+  .button22 {
+    width: 40px;
+    height: 40px;
+    padding: 4px 11px;
+  }
+}
+
 .message-card-admin {
   display: flex;
   flex-direction: row-reverse;
@@ -109,7 +127,6 @@
 .message {
   border-radius: 14px;
   background-color: #546fff;
-  font-family: DM Sans;
   font-size: 16px;
   font-weight: 400;
   padding: 4px 10px;
@@ -117,7 +134,6 @@
   text-align: left;
   color: #ffffff;
 }
-
 
 .bot {
   top: 20px;
@@ -129,14 +145,21 @@
   width: 243px;
 }
 
-
 img {
   width: 60px;
 }
 
-@media screen and (max-width:700px) {
+@media screen and (max-width: 700px) {
   .container11 {
     width: 90% !important;
+  }
+
+  .message {
+    font-size: 12px;
+    line-height: 20px;
+  }
+  img {
+    width: 40px;
   }
 }
 
@@ -145,7 +168,7 @@ img {
 }
 
 .container1 {
-  padding: 10px
+  padding: 10px;
 }
 
 .container1::-webkit-scrollbar {
@@ -184,7 +207,6 @@ img {
   animation: fadeIn 0.5s ease-in-out forwards;
 }
 
-
 @keyframes rotate {
   from {
     transform: rotate(0deg);
@@ -197,5 +219,5 @@ img {
 
 /* Apply animation to the rotating class */
 .rotate {
-  animation: rotate .5s linear forwards;
+  animation: rotate 0.5s linear forwards;
 }

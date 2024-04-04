@@ -1,186 +1,228 @@
-import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
+import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
-const MessageInput = document.querySelector('#MessageInput');
+const MessageInput = document.querySelector("#MessageInput");
 
-const MessageList = document.querySelector('#MessageList');
+const MessageList = document.querySelector("#MessageList");
+
+const userDetails = localStorage.getItem("userDetails")
+  ? localStorage.getItem("userDetails")
+  : false;
 
 var messagesData = [
-	{
-		user: 'bot',
-		message: 'Hi I am MITA, How can I Help You?',
-	},
+  {
+    user: "bot",
+    message: `Hi I am MITA, "How can I Help You?`,
+  },
 ];
 
 function scrollToBottom() {
-	MessageList.scrollTop = MessageList.scrollHeight;
+  MessageList.scrollTop = MessageList.scrollHeight;
 }
 
 const loading = (status) => {
-	const loader = document.querySelector('#loader');
-	const sendButton = document.querySelector('#sendbtn');
-	if (status === true) {
-		loader.classList.remove('hidden');
-		loader.classList.add('flex');
-		MessageInput.disabled = true;
-		MessageInput.placeholder = 'Thinking...';
-		MessageInput.classList.add('cursor-not-allowed');
-		sendButton.classList.add('cursor-not-allowed');
-		sendButton.classList.add('disabled');
-		sendButton.disabled = true;
-	} else {
-		loader.classList.add('hidden');
-		loader.classList.remove('flex');
-		MessageInput.disabled = false;
-		sendButton.disabled = false;
-		sendButton.classList.remove('cursor-not-allowed');
-		MessageInput.classList.remove('cursor-not-allowed');
-		sendButton.classList.remove('disabled');
-		MessageInput.placeholder = 'Type your questions here';
-	}
+  const loader = document.querySelector("#loader");
+  const sendButton = document.querySelector("#sendbtn");
+  if (status === true) {
+    loader.classList.remove("hidden");
+    loader.classList.add("flex");
+    MessageInput.disabled = true;
+    MessageInput.placeholder = "Thinking...";
+    MessageInput.classList.add("cursor-not-allowed");
+    sendButton.classList.add("cursor-not-allowed");
+    sendButton.classList.add("disabled");
+    sendButton.disabled = true;
+  } else {
+    loader.classList.add("hidden");
+    loader.classList.remove("flex");
+    MessageInput.disabled = false;
+    sendButton.disabled = false;
+    sendButton.classList.remove("cursor-not-allowed");
+    MessageInput.classList.remove("cursor-not-allowed");
+    sendButton.classList.remove("disabled");
+    MessageInput.placeholder = "Type your questions here";
+  }
 };
 
-async function query(data) {
-	const response = await fetch(
-		'https://api-inference.huggingface.co/models/facebook/bart-large-cnn',
-		{
-			headers: {
-				Authorization: 'Bearer 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',
-			},
-			method: 'POST',
-			body: JSON.stringify(data),
-		},
-	);
-	const result = await response.json();
-	return result;
-}
-
 const sendMessages = async (promot, brainId, name) => {
-	loading(true);
-	messagesData.push({ user: 'user', message: promot });
-	displayMessages();
+  loading(true);
+  messagesData.push({ user: "user", message: promot });
+  displayMessages();
 
-	const url = `https://mita.onrender.com/chat?brain_id=${brainId}&user_name=${name}&prompt=${promot}`;
-	// http://mita.marvelcloudsolutions.tech/chat?brain_id=1211&user_name=praveen&prompt=wleocme
-	try {
-		const response = await fetch(url);
+  // const url = `https://mita.onrender.com/chat?brain_id=${brainId}&user_name=${name}&prompt=${promot}&level=student&phone=5555555555`;
+  const url = `https://mita-eng-relay.onrender.com/chat?brain_id=${JSON.parse(localStorage.getItem("userDetails")).contact}&user_name=${name}&prompt=${promot}&level=student&phone=${
+    JSON.parse(localStorage.getItem("userDetails")).contact
+  }&email=${JSON.parse(localStorage.getItem("userDetails")).email}`;
+  https: try {
+    const response = await fetch(url);
 
-		if (!response.ok) {
-			throw new Error('Network response was not ok');
-		}
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
 
-		const data = await response.json();
-		const formattedMessage = await marked(data.message);
-		// const summarizedMessage = await query({ inputs: formattedMessage });
-		messagesData.push({
-			user: 'bot',
-			message:
-				formattedMessage?.toLowerCase().includes('admission') ||
-				formattedMessage?.toLowerCase().includes('contact')
-					? formattedMessage +
-					  `\n for More admission Related Contact: 9498093535`
-					: formattedMessage,
-		});
-		displayMessages();
-		loading(false);
-	} catch (error) {
-		console.error('There was a problem with the fetch operation:', error);
-	}
+    const data = await response.json();
+    const formattedMessage = await marked(data.message);
+    // const summarizedMessage = await query({ inputs: formattedMessage });
+    messagesData.push({
+      user: "bot",
+      message:
+        formattedMessage?.toLowerCase().includes("admission") ||
+        formattedMessage?.toLowerCase().includes("contact")
+          ? formattedMessage +
+            `\n for More admission Related Contact: 9498093535`
+          : formattedMessage,
+    });
+    displayMessages();
+    loading(false);
+  } catch (error) {
+    console.error("There was a problem with the fetch operation:", error);
+  }
 };
 
 const displayMessages = async () => {
-	MessageList.innerHTML = '';
-	try {
-		messagesData.forEach((data) => {
-			const messageDiv = document.createElement('div');
-			messageDiv.classList.add(
-				data.user === 'user' ? 'message-card-admin' : 'message-card-bot',
-			);
+  MessageList.innerHTML = "";
+  try {
+    messagesData.forEach((data) => {
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add(
+        data.user === "user" ? "message-card-admin" : "message-card-bot"
+      );
 
-			const profileDiv = document.createElement('div');
-			profileDiv.classList.add(data.user === 'user' ? 'profile' : 'reply');
+      const profileDiv = document.createElement("div");
+      profileDiv.classList.add(data.user === "user" ? "profile" : "reply");
 
-			const image = document.createElement('img');
-			image.setAttribute(
-				'src',
-				data.user === 'bot' ? './images/logo.jpg' : './images/useravatar.png',
-			);
+      const image = document.createElement("img");
+      image.setAttribute(
+        "src",
+        data.user === "bot" ? "./images/logo.jpg" : "./images/useravatar.png"
+      );
 
-			const messageContentDiv = document.createElement('div');
-			messageContentDiv.classList.add('message');
-			messageContentDiv.innerHTML = data.message
-				? marked(data.message)
-				: data.message;
+      const messageContentDiv = document.createElement("div");
+      messageContentDiv.classList.add("message");
+      messageContentDiv.innerHTML = data.message
+        ? marked(data.message)
+        : data.message;
 
-			messageDiv.appendChild(profileDiv);
-			profileDiv.appendChild(image);
-			messageDiv.appendChild(messageContentDiv);
+      messageDiv.appendChild(profileDiv);
+      profileDiv.appendChild(image);
+      messageDiv.appendChild(messageContentDiv);
 
-			const wrapperDiv = document.createElement('div');
-			wrapperDiv.classList.add('w-full');
-			wrapperDiv.appendChild(messageDiv);
-			wrapperDiv.appendChild(document.createElement('br'));
+      const wrapperDiv = document.createElement("div");
+      wrapperDiv.classList.add("w-full");
+      wrapperDiv.appendChild(messageDiv);
+      wrapperDiv.appendChild(document.createElement("br"));
 
-			MessageList.appendChild(wrapperDiv);
-		});
-	} catch (error) {
-		console.log(error);
-	}
-	scrollToBottom();
+      MessageList.appendChild(wrapperDiv);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  scrollToBottom();
 };
 
 displayMessages();
 
 function generateRandomUUID() {
-	let uuid = '';
-	const characters = '0123456789abcdef';
+  let uuid = "";
+  const characters = "0123456789abcdef";
 
-	for (let i = 0; i < 16; i++) {
-		uuid += characters.charAt(Math.floor(Math.random() * characters.length));
-	}
+  for (let i = 0; i < 16; i++) {
+    uuid += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
 
-	return uuid;
+  return uuid;
 }
 
 const setBrainData = () => {
-	const brainId = localStorage.getItem('brainId');
-	if (!brainId) {
-		const new_braindId = generateRandomUUID();
-		localStorage.setItem('brainId', new_braindId);
-	}
+  const brainId = localStorage.getItem("brainId");
+  if (!brainId) {
+    const new_braindId = generateRandomUUID();
+    localStorage.setItem("brainId", new_braindId);
+  }
 };
 
 setBrainData();
 
-document.querySelector('#sendbtn').addEventListener('click', function () {
-	const brainId = localStorage.getItem('brainId');
-	sendMessages(MessageInput.value, brainId, brainId);
-	MessageInput.value = '';
+document.querySelector("#sendbtn").addEventListener("click", function () {
+  const brainId = localStorage.getItem("brainId");
+  sendMessages(MessageInput.value, brainId, brainId);
+  MessageInput.value = "";
 });
 
-document.querySelector('#form').addEventListener('submit', function () {
-	const brainId = localStorage.getItem('brainId');
-	sendMessages(MessageInput.value, brainId, brainId);
-	MessageInput.value = '';
+document.querySelector("#form").addEventListener("submit", function () {
+  const brainId = localStorage.getItem("brainId");
+  sendMessages(MessageInput.value, brainId, brainId);
+  MessageInput.value = "";
 });
 
-const ShowBotValue = document.querySelector('#container11');
-const showBotToogle = document.querySelector('#showBotToogle');
+const ShowBotValue = document.querySelector("#container11");
+const showBotToogle = document.querySelector("#showBotToogle");
 
 const ShowBot = () => {
-	if (ShowBotValue.classList.contains('hidden')) {
-		ShowBotValue.classList.remove('hidden');
-		ShowBotValue.classList.add('block');
-		ShowBotValue.classList.add('fade-in');
-		showBotToogle.innerHTML = '<i class="bi bi-x"></i>';
-		showBotToogle.classList.add('rotate');
-	} else if (ShowBotValue.classList.contains('block')) {
-		ShowBotValue.classList.add('hidden');
-		ShowBotValue.classList.remove('block');
-		showBotToogle.classList.remove('rotate');
-		showBotToogle.innerHTML = '<i class="bi bi-robot"></i>';
-	}
+  if (ShowBotValue.classList.contains("hidden")) {
+    ShowBotValue.classList.remove("hidden");
+    ShowBotValue.classList.add("block");
+    ShowBotValue.classList.add("fade-in");
+    showBotToogle.innerHTML = '<i class="bi bi-x"></i>';
+    showBotToogle.classList.add("rotate");
+  } else if (ShowBotValue.classList.contains("block")) {
+    ShowBotValue.classList.add("hidden");
+    ShowBotValue.classList.remove("block");
+    showBotToogle.classList.remove("rotate");
+    showBotToogle.innerHTML = '<i class="bi bi-robot"></i>';
+  }
 };
 
-document.querySelector('#showBotToogle').addEventListener('click', function () {
-	ShowBot();
+document.querySelector("#showBotToogle").addEventListener("click", function () {
+  ShowBot();
 });
+
+function showMessages() {
+  const MessageList = document.getElementById("MessageList");
+  const UserForm = document.getElementById("UserForm");
+  const bottomBox = document.getElementById("bottomBox");
+  MessageList.classList.remove("hidden");
+  MessageList.classList.add("flex");
+  UserForm.classList.add("hidden");
+  UserForm.classList.remove("flex");
+  bottomBox.classList.add("flex");
+  bottomBox.classList.remove("hidden");
+}
+
+function showForm() {
+  const MessageList = document.getElementById("MessageList");
+  const UserForm = document.getElementById("UserForm");
+  const bottomBox = document.getElementById("bottomBox");
+  MessageList.classList.add("hidden");
+  MessageList.classList.remove("flex");
+  UserForm.classList.remove("hidden");
+  UserForm.classList.add("flex");
+  bottomBox.classList.remove("flex");
+  bottomBox.classList.add("hidden");
+}
+
+function saveUserDetails() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const contact = document.getElementById("contact").value;
+  const level = document.getElementById("level").value;
+  const url = `https://mita-eng-relay.onrender.com/saveuser?phone=${contact}&name=${name}&email=${email}&level=${level}`;
+  const res = fetch(url);
+  const userDetails = {
+    name: name,
+    email: email,
+    contact: contact,
+    level: level,
+  };
+  localStorage.setItem("userDetails", JSON.stringify(userDetails));
+  showMessages();
+}
+
+const saveUserButton = document.getElementById("saveuserDetails");
+
+saveUserButton.addEventListener("click", saveUserDetails);
+
+if (userDetails) {
+  showMessages();
+} else {
+  showForm();
+}
