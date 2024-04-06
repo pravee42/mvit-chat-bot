@@ -218,7 +218,21 @@ img {
   }
 }
 
-/* Apply animation to the rotating class */
 .rotate {
   animation: rotate 0.5s linear forwards;
+}
+
+menu, ol, ul {
+  list-style: decimal !important;
+  margin: auto !important;
+  padding: 10px 15px !important;
+}
+
+a {
+  color: blue !important; 
+  text-decoration: underline; 
+}
+
+a:hover {
+  color: red !important; 
 }
