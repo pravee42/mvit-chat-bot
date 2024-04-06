@@ -146,7 +146,7 @@ setBrainData();
 
 document.querySelector("#sendbtn").addEventListener("click", function () {
   const brainId = localStorage.getItem("brainId");
-  sendMessages(MessageInput.value, brainId, brainId);
+  sendMessages(MessageInput.value, brainId, JSON.parse(localStorage.getItem("userDetails")).name);
   MessageInput.value = "";
 });
 
