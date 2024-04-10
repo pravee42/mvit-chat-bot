@@ -112,9 +112,8 @@ const displayMessages = async () => {
       image.classList.add("rounded-full")
       const messageContentDiv = document.createElement("div");
       messageContentDiv.classList.add("message");
-      messageContentDiv.innerHTML = data.message
-        ? marked(data.message).toString()
-        : data.message;
+      messageContentDiv.innerHTML = data.user === "bot" ? marked(data.message)
+        : data.message.toString()
 
       messageDiv.appendChild(profileDiv);
       profileDiv.appendChild(image);
@@ -204,7 +203,7 @@ async function LoadMessages() {
       const data = await response.json();
       const historyMessages = data.history;
       historyMessages.map(async (chat) => {
-        const formattedMessage = await marked(chat.content);
+        const formattedMessage = await chat.role === "assistant" ? marked(chat.content) : chat.content.toString();
         // const summarizedMessage = await query({ inputs: formattedMessage });
         messagesData.push({
           user: chat.role === "assistant" ? "bot" : "user",
