@@ -8,6 +8,8 @@ const userDetails = localStorage.getItem("userDetails")
   ? localStorage.getItem("userDetails")
   : false;
 
+var TryAgain = false;
+
 var messagesData = [
   {
     user: "bot",
@@ -17,6 +19,10 @@ var messagesData = [
 
 function scrollToBottom() {
   MessageList.scrollTop = MessageList.scrollHeight;
+}
+
+async function toogleTryAgain() {
+  
 }
 
 const loading = (status) => {
@@ -48,9 +54,8 @@ const sendMessages = async (promot, brainId, name) => {
   messagesData.push({ user: "user", message: promot });
   displayMessages();
 
-  // const url = `https://mita.onrender.com/chat?brain_id=${brainId}&user_name=${name}&prompt=${promot}&level=student&phone=5555555555`;
   const url = `https://mita-eng-relay.onrender.com/chat?brain_id=${
-    JSON.parse(localStorage.getItem("userDetails")).contact
+    JSON.parse(localStorage.getItem("userDetails")).name
   }&user_name=${name}&prompt=${promot}&level=student&phone=${
     JSON.parse(localStorage.getItem("userDetails")).contact
   }&email=${JSON.parse(localStorage.getItem("userDetails")).email}`;
@@ -71,16 +76,23 @@ const sendMessages = async (promot, brainId, name) => {
         formattedMessage?.toLowerCase().includes("contact")
           ? formattedMessage +
             `\n for More admission Related Contact: 9498093535`
-          : formattedMessage,
+          : formattedMessage.toString(),
     });
     displayMessages();
-    loading(false);
   } catch (error) {
-    console.error("There was a problem with the fetch operation:", error);
+    messagesData.push({
+      user: "bot",
+      message: "Cannot Process the request. Try Again"
+    });
+    displayMessages()
+    console.error("There was a problem with the fetch operation:", error, "error");
   }
+  loading(false);
 };
 
 const displayMessages = async () => {
+  const userAvatar = "https://th.bing.com/th/id/OIP.FZPwy2a4714RejChdfNfgwHaHa?rs=1&pid=ImgDetMain"
+  // const userAvatar = "./images/useravatar.png"
   MessageList.innerHTML = "";
   try {
     messagesData.forEach((data) => {
@@ -95,13 +107,13 @@ const displayMessages = async () => {
       const image = document.createElement("img");
       image.setAttribute(
         "src",
-        data.user === "bot" ? "./images/logo.png" : "./images/useravatar.png"
+        data.user === "bot" ? "./images/logo.png" : userAvatar
       );
-
+      image.classList.add("rounded-full")
       const messageContentDiv = document.createElement("div");
       messageContentDiv.classList.add("message");
       messageContentDiv.innerHTML = data.message
-        ? marked(data.message)
+        ? marked(data.message).toString()
         : data.message;
 
       messageDiv.appendChild(profileDiv);
@@ -242,15 +254,13 @@ function saveUserDetails(e) {
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const contact = document.getElementById("contact").value;
-  const level = document.getElementById("level").value;
-  const url = `https://mita-eng-relay.onrender.com/saveuser?phone=${contact}&name=${name}&email=${email}&level=${level}`;
-  if (email !== "" && contact !== "" && level !== "" && name !== "") {
+  const url = `https://mita-eng-relay.onrender.com/saveuser?phone=${contact}&name=${name}&email=${email}`;
+  if (email !== "" && contact !== ""&& name !== "") {
     const res = fetch(url);
     const userDetails = {
       name: name,
       email: email,
       contact: contact,
-      level: level,
     };
     localStorage.setItem("userDetails", JSON.stringify(userDetails));
     showMessages();
