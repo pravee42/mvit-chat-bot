@@ -1,110 +1,11 @@
 <html>
   <head>
     <title>MITA</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
     <script src="https://cdn.tailwindcss.com"></script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
-    <div class="container1">
-      
-      <div
-        id="container11"
-        class="container11 h-[90%] border-2 rounded rounded-xl drop-shadow bg-yellow-100 w-full border-solid p-4 relative hidden sm:h-[70%] sm:w-[500px] "
-      >
-      <iframe class="rounded-md" width="100%" height="200" src="https://www.youtube-nocookie.com/embed/b298YNVcKKc?si=Bbb1uMiweP68v0u7" title="Sathishzuz" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <div
-          id="MessageList"
-          class="flex flex-col gap-2 items-start w-100 overflow-auto h-[330px] sm:h-[450px] mt-[10px] mb-[50px]"
-        ></div>
-        <form
-          id="UserForm"
-          class="flex flex-col gap-4 sm:gap-10 items-center w-full justify-center overflow-auto h-full"
-        >
-          <p class="block text-gray-700 font-bold mb-2">
-            Please Enter User Details
-          </p>
-          <div class="w-full max-w-md mx-auto">
-            <label for="input" class="block text-gray-700 font-bold mb-2"
-              >User Name</label
-            >
-            <input
-              required
-              type="text"
-              id="name"
-              placeholder="Name"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div class="w-full max-w-md mx-auto">
-            <label for="input" class="block text-gray-700 font-bold mb-2"
-              >Email</label
-            >
-            <input
-              required
-              type="text"
-              placeholder="Email"
-              id="email"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div class="w-full max-w-md mx-auto">
-            <label for="input" class="block text-gray-700 font-bold mb-2"
-              >Phone Number</label
-            >
-            <input
-              required
-              id="contact"
-              type="text"
-              placeholder="Phone Number"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <button
-            id="saveuserDetails"
-            class="bg-blue-500 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Continue
-          </button>
-        </form>
-        <div
-          id="bottomBox"
-          class="bottomBox absolute bottom-0 sm:bottom-2 items-center gap-2"
-        >
-          <button
-            id="clearCache"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-bold h-[50px] w-[100px] rounded focus:outline-none focus:shadow-outline"
-          >
-            New +
-          </button>
-          <form id="form" class="inputbox">
-            <input
-              type="text"
-              id="MessageInput"
-              placeholder="Type your questions here"
-            />
-            <div id="loader" class="absolute w-[30px] h-[30px] right-20 hidden">
-              <img src="./images/loader.gif" alt="Loader" />
-            </div>
-            <button id="sendbtn" class="button22 hover:shadow hover:shadow-xl">
-              <i class="bi bi-send text-white"></i>
-            </button>
-          </form>
-        </div>
-      </div>
-      <div id="showBotToogle" class="button1"><i class="bi bi-robot"></i></div>
-    </div>
+   
   </body>
-  <script type="module" src="script.js"></script>
+  <script type="module" src="render.js"></script>
+
 </html>
