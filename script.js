@@ -4,6 +4,8 @@ const MessageInput = document.querySelector("#MessageInput");
 
 const MessageList = document.querySelector("#MessageList");
 
+const HOST  = "https://mita2-03014e0e72c1.herokuapp.com"
+
 const userDetails = localStorage.getItem("userDetails")
   ? localStorage.getItem("userDetails")
   : false;
@@ -21,9 +23,6 @@ function scrollToBottom() {
   MessageList.scrollTop = MessageList.scrollHeight;
 }
 
-async function toogleTryAgain() {
-  
-}
 
 const loading = (status) => {
   const loader = document.querySelector("#loader");
@@ -54,7 +53,7 @@ const sendMessages = async (promot, brainId, name) => {
   messagesData.push({ user: "user", message: promot });
   displayMessages();
 
-  const url = `https://mita-eng-relay.onrender.com/chat?brain_id=${
+  const url = `${HOST}/chat?brain_id=${
     JSON.parse(localStorage.getItem("userDetails")).name
   }&user_name=${name}&prompt=${promot}&level=student&phone=${
     JSON.parse(localStorage.getItem("userDetails")).contact
@@ -90,6 +89,7 @@ const sendMessages = async (promot, brainId, name) => {
   loading(false);
 };
 
+
 const displayMessages = async () => {
   const userAvatar = "https://th.bing.com/th/id/OIP.FZPwy2a4714RejChdfNfgwHaHa?rs=1&pid=ImgDetMain"
   // const userAvatar = "./images/useravatar.png"
@@ -109,11 +109,18 @@ const displayMessages = async () => {
         "src",
         data.user === "bot" ? "./images/logo.png" : userAvatar
       );
-      image.classList.add("rounded-full")
+      image.classList.add("rounded-full");
+
       const messageContentDiv = document.createElement("div");
       messageContentDiv.classList.add("message");
-      messageContentDiv.innerHTML = data.user === "bot" ? marked(data.message)
-        : data.message.toString()
+
+      if (data.user === "bot") {
+        messageContentDiv.innerHTML = marked(data.message);
+      } else {
+        const sanitizedText = (data.message.toString());
+        messageContentDiv.textContent = sanitizedText;
+        // messageContentDiv.innerHTML = `${data.message.toString()}`
+      }
 
       messageDiv.appendChild(profileDiv);
       profileDiv.appendChild(image);
@@ -131,6 +138,49 @@ const displayMessages = async () => {
   }
   scrollToBottom();
 };
+
+
+// const displayMessages = async () => {
+//   const userAvatar = "https://th.bing.com/th/id/OIP.FZPwy2a4714RejChdfNfgwHaHa?rs=1&pid=ImgDetMain"
+//   // const userAvatar = "./images/useravatar.png"
+//   MessageList.innerHTML = "";
+//   try {
+//     messagesData.forEach((data) => {
+//       const messageDiv = document.createElement("div");
+//       messageDiv.classList.add(
+//         data.user === "user" ? "message-card-admin" : "message-card-bot"
+//       );
+
+//       const profileDiv = document.createElement("div");
+//       profileDiv.classList.add(data.user === "user" ? "profile" : "reply");
+
+//       const image = document.createElement("img");
+//       image.setAttribute(
+//         "src",
+//         data.user === "bot" ? "./images/logo.png" : userAvatar
+//       );
+//       image.classList.add("rounded-full")
+//       const messageContentDiv = document.createElement("div");
+//       messageContentDiv.classList.add("message");
+//       messageContentDiv.innerHTML = data.user === "bot" ? marked(data.message)
+//         : data.message.toString()
+
+//       messageDiv.appendChild(profileDiv);
+//       profileDiv.appendChild(image);
+//       messageDiv.appendChild(messageContentDiv);
+
+//       const wrapperDiv = document.createElement("div");
+//       wrapperDiv.classList.add("w-full");
+//       wrapperDiv.appendChild(messageDiv);
+//       wrapperDiv.appendChild(document.createElement("br"));
+
+//       MessageList.appendChild(wrapperDiv);
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   scrollToBottom();
+// };
 
 displayMessages();
 
@@ -192,7 +242,7 @@ document.querySelector("#showBotToogle").addEventListener("click", function () {
 async function LoadMessages() {
   if (localStorage.getItem("userDetails")) {
     const data = JSON.parse(localStorage.getItem("userDetails"));
-    const url = `https://mita-eng-relay.onrender.com/history?phone=${data.contact}`;
+    const url = `${HOST}/history?phone=${data.contact}`;
     try {
       const response = await fetch(url);
 
@@ -253,7 +303,7 @@ function saveUserDetails(e) {
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const contact = document.getElementById("contact").value;
-  const url = `https://mita-eng-relay.onrender.com/saveuser?phone=${contact}&name=${name}&email=${email}`;
+  const url = `${HOST}/saveuser?phone=${contact}&name=${name}&email=${email}`;
   if (email !== "" && contact !== ""&& name !== "") {
     const res = fetch(url);
     const userDetails = {
@@ -282,7 +332,7 @@ if (userDetails) {
 }
 
 async function Clearhistory() {
-  const URL = `https://mita-eng-relay.onrender.com/clear_history?phone=${
+  const URL = `${HOST}/clear_history?phone=${
     JSON.parse(localStorage.getItem("userDetails")).contact
   }`;
   const res = await fetch(URL);
