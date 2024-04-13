@@ -412,7 +412,6 @@ const sendMessages = async (promot, brainId, name) => {
 
     const data = await response.json();
     const formattedMessage = await marked(data.message);
-    // const summarizedMessage = await query({ inputs: formattedMessage });
     messagesData.push({
       user: "bot",
       message:
@@ -437,7 +436,6 @@ const sendMessages = async (promot, brainId, name) => {
 
 const displayMessages = async () => {
   const userAvatar = "https://th.bing.com/th/id/OIP.FZPwy2a4714RejChdfNfgwHaHa?rs=1&pid=ImgDetMain"
-  // const userAvatar = "./images/useravatar.png"
   MessageList.innerHTML = "";
   try {
     messagesData.forEach((data) => {
@@ -484,48 +482,6 @@ const displayMessages = async () => {
   scrollToBottom();
 };
 
-
-// const displayMessages = async () => {
-//   const userAvatar = "https://th.bing.com/th/id/OIP.FZPwy2a4714RejChdfNfgwHaHa?rs=1&pid=ImgDetMain"
-//   // const userAvatar = "./images/useravatar.png"
-//   MessageList.innerHTML = "";
-//   try {
-//     messagesData.forEach((data) => {
-//       const messageDiv = document.createElement("div");
-//       messageDiv.classList.add(
-//         data.user === "user" ? "message-card-admin" : "message-card-bot"
-//       );
-
-//       const profileDiv = document.createElement("div");
-//       profileDiv.classList.add(data.user === "user" ? "profile" : "reply");
-
-//       const image = document.createElement("img");
-//       image.setAttribute(
-//         "src",
-//         data.user === "bot" ? "./images/logo.png" : userAvatar
-//       );
-//       image.classList.add("rounded-full")
-//       const messageContentDiv = document.createElement("div");
-//       messageContentDiv.classList.add("message");
-//       messageContentDiv.innerHTML = data.user === "bot" ? marked(data.message)
-//         : data.message.toString()
-
-//       messageDiv.appendChild(profileDiv);
-//       profileDiv.appendChild(image);
-//       messageDiv.appendChild(messageContentDiv);
-
-//       const wrapperDiv = document.createElement("div");
-//       wrapperDiv.classList.add("w-full");
-//       wrapperDiv.appendChild(messageDiv);
-//       wrapperDiv.appendChild(document.createElement("br"));
-
-//       MessageList.appendChild(wrapperDiv);
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-//   scrollToBottom();
-// };
 
 displayMessages();
 
@@ -599,7 +555,6 @@ async function LoadMessages() {
       const historyMessages = data.history;
       historyMessages.map(async (chat) => {
         const formattedMessage = await chat.role === "assistant" ? marked(chat.content) : chat.content.toString();
-        // const summarizedMessage = await query({ inputs: formattedMessage });
         messagesData.push({
           user: chat.role === "assistant" ? "bot" : "user",
           message:
@@ -610,7 +565,6 @@ async function LoadMessages() {
               : formattedMessage,
         });
         displayMessages();
-        // loading(false);
         scrollToBottom();
       });
     } catch (error) {
