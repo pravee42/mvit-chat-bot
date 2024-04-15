@@ -25,7 +25,7 @@ function renderHTML() {
 
   innerContainer.appendChild(messageList);
 
-  const userForm = document.createElement('form');
+  const userForm = document.createElement('div');
   userForm.id = 'UserForm';
   userForm.classList.add('flex', 'flex-col', 'gap-4', 'sm:gap-10', 'items-center', 'w-full', 'justify-center', 'overflow-auto', 'h-full');
 
@@ -349,7 +349,7 @@ const MessageInput = document.querySelector("#MessageInput");
 
 const MessageList = document.querySelector("#MessageList");
 
-const HOST  = "https://mita2-03014e0e72c1.herokuapp.com"
+const HOST  = "https://mita-eng-relay.onrender.com"
 
 const userDetails = localStorage.getItem("userDetails")
   ? localStorage.getItem("userDetails")
