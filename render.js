@@ -104,7 +104,7 @@ function renderHTML() {
     <form id="form" class="inputbox">
       <input type="text" id="MessageInput" placeholder="Type your questions here" />
       <div id="loader" class="absolute w-[30px] h-[30px] right-20 hidden">
-        <img src="https://mvit-chat-bot.vercel.app/images/logo.png" alt="Loader" />
+        <img src="https://mvit-chat-bot.vercel.app/images/loader.gif" alt="Loader" />
       </div>
       <button id="sendbtn" class="button22 hover:shadow hover:shadow-xl">
         <i class="bi bi-send text-white"></i>
