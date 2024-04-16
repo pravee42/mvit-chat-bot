@@ -1,33 +1,71 @@
 function renderHTML() {
-  const container = document.createElement('div');
-  container.classList.add('container1');
+  const container = document.createElement("div");
+  container.classList.add("container1");
 
-  const innerContainer = document.createElement('div');
-  innerContainer.id = 'container11';
-  innerContainer.classList.add('container11', 'h-[90%]', 'border-2', 'rounded', 'rounded-xl', 'drop-shadow', 'bg-yellow-100', 'w-full', 'border-solid', 'p-4', 'relative', 'hidden', 'sm:h-[70%]', 'sm:w-[500px]');
+  const innerContainer = document.createElement("div");
+  innerContainer.id = "container11";
+  innerContainer.classList.add(
+    "container11",
+    "h-[90%]",
+    "border-2",
+    "rounded",
+    "rounded-xl",
+    "drop-shadow",
+    "bg-yellow-100",
+    "w-full",
+    "border-solid",
+    "p-4",
+    "relative",
+    "hidden",
+    "sm:h-[70%]",
+    "sm:w-[500px]"
+  );
 
-  const iframe = document.createElement('iframe');
-  iframe.classList.add('rounded-md');
-  iframe.width = '100%';
-  iframe.height = '200';
-  iframe.src = 'https://www.youtube-nocookie.com/embed/b298YNVcKKc?si=Bbb1uMiweP68v0u7';
-  iframe.title = 'Sathishzuz';
-  iframe.frameBorder = '0';
-  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+  const iframe = document.createElement("iframe");
+  iframe.classList.add("rounded-md");
+  iframe.width = "100%";
+  iframe.height = "200";
+  iframe.src =
+    "https://www.youtube-nocookie.com/embed/b298YNVcKKc?si=Bbb1uMiweP68v0u7";
+  iframe.title = "Sathishzuz";
+  iframe.frameBorder = "0";
+  iframe.allow =
+    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+  iframe.referrerPolicy = "strict-origin-when-cross-origin";
   iframe.allowFullscreen = true;
 
   innerContainer.appendChild(iframe);
 
-  const messageList = document.createElement('div');
-  messageList.id = 'MessageList';
-  messageList.classList.add('flex', 'flex-col', 'gap-2', 'items-start', 'w-100', 'overflow-auto', 'h-[330px]', 'sm:h-[450px]', 'mt-[10px]', 'mb-[50px]');
+  const messageList = document.createElement("div");
+  messageList.id = "MessageList";
+  messageList.classList.add(
+    "flex",
+    "flex-col",
+    "gap-2",
+    "items-start",
+    "w-100",
+    "overflow-auto",
+    "h-[330px]",
+    "sm:h-[450px]",
+    "mt-[10px]",
+    "mb-[50px]"
+  );
 
   innerContainer.appendChild(messageList);
 
-  const userForm = document.createElement('div');
-  userForm.id = 'UserForm';
-  userForm.classList.add('flex', 'flex-col', 'gap-4', 'sm:gap-10', 'items-center', 'w-full', 'justify-center', 'overflow-auto', 'h-full');
+  const userForm = document.createElement("div");
+  userForm.id = "UserForm";
+  userForm.classList.add(
+    "flex",
+    "flex-col",
+    "gap-4",
+    "sm:gap-10",
+    "items-center",
+    "w-full",
+    "justify-center",
+    "overflow-auto",
+    "h-full"
+  );
 
   const userFormContent = `
     <p class="block text-gray-700 font-bold mb-2">Please Enter User Details</p>
@@ -50,9 +88,16 @@ function renderHTML() {
 
   innerContainer.appendChild(userForm);
 
-  const bottomBox = document.createElement('div');
-  bottomBox.id = 'bottomBox';
-  bottomBox.classList.add('bottomBox', 'absolute', 'bottom-0', 'sm:bottom-2', 'items-center', 'gap-2');
+  const bottomBox = document.createElement("div");
+  bottomBox.id = "bottomBox";
+  bottomBox.classList.add(
+    "bottomBox",
+    "absolute",
+    "bottom-0",
+    "sm:bottom-2",
+    "items-center",
+    "gap-2"
+  );
 
   const bottomBoxContent = `
     <button id="clearCache" class="bg-blue-500 hover:bg-blue-600 text-white font-bold h-[50px] w-[100px] rounded focus:outline-none focus:shadow-outline">New +</button>
@@ -73,9 +118,9 @@ function renderHTML() {
 
   container.appendChild(innerContainer);
 
-  const showBotToggle = document.createElement('div');
-  showBotToggle.id = 'showBotToogle';
-  showBotToggle.classList.add('button1');
+  const showBotToggle = document.createElement("div");
+  showBotToggle.id = "showBotToogle";
+  showBotToggle.classList.add("button1");
   showBotToggle.innerHTML = '<i class="bi bi-robot"></i>';
 
   container.appendChild(showBotToggle);
@@ -85,7 +130,7 @@ function renderHTML() {
 
 renderHTML();
 
-document.head.innerHTML += (`
+document.head.innerHTML += `
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
@@ -97,7 +142,7 @@ document.head.innerHTML += (`
 <link
   href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
   rel="stylesheet"
-/>`)
+/>`;
 
 document.head.innerHTML += `
 <style>
@@ -340,8 +385,7 @@ a:hover {
   color: red !important; 
 }
 </style>
-`
-
+`;
 
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
@@ -349,7 +393,7 @@ const MessageInput = document.querySelector("#MessageInput");
 
 const MessageList = document.querySelector("#MessageList");
 
-const HOST  = "https://mita-eng-relay.onrender.com"
+const HOST = "https://mita-mvit-backend.hf.space";
 
 const userDetails = localStorage.getItem("userDetails")
   ? localStorage.getItem("userDetails")
@@ -367,7 +411,6 @@ var messagesData = [
 function scrollToBottom() {
   MessageList.scrollTop = MessageList.scrollHeight;
 }
-
 
 const loading = (status) => {
   const loader = document.querySelector("#loader");
@@ -404,7 +447,7 @@ const sendMessages = async (promot, brainId, name) => {
     JSON.parse(localStorage.getItem("userDetails")).contact
   }&email=${JSON.parse(localStorage.getItem("userDetails")).email}`;
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { mode: "no-cors" });
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -425,17 +468,21 @@ const sendMessages = async (promot, brainId, name) => {
   } catch (error) {
     messagesData.push({
       user: "bot",
-      message: "Cannot Process the request. Try Again"
+      message: "Cannot Process the request. Try Again",
     });
-    displayMessages()
-    console.error("There was a problem with the fetch operation:", error, "error");
+    displayMessages();
+    console.error(
+      "There was a problem with the fetch operation:",
+      error,
+      "error"
+    );
   }
   loading(false);
 };
 
-
 const displayMessages = async () => {
-  const userAvatar = "https://th.bing.com/th/id/OIP.FZPwy2a4714RejChdfNfgwHaHa?rs=1&pid=ImgDetMain"
+  const userAvatar =
+    "https://th.bing.com/th/id/OIP.FZPwy2a4714RejChdfNfgwHaHa?rs=1&pid=ImgDetMain";
   MessageList.innerHTML = "";
   try {
     messagesData.forEach((data) => {
@@ -460,7 +507,7 @@ const displayMessages = async () => {
       if (data.user === "bot") {
         messageContentDiv.innerHTML = marked(data.message);
       } else {
-        const sanitizedText = (data.message.toString());
+        const sanitizedText = data.message.toString();
         messageContentDiv.textContent = sanitizedText;
         // messageContentDiv.innerHTML = `${data.message.toString()}`
       }
@@ -481,7 +528,6 @@ const displayMessages = async () => {
   }
   scrollToBottom();
 };
-
 
 displayMessages();
 
@@ -508,7 +554,11 @@ setBrainData();
 
 document.querySelector("#sendbtn").addEventListener("click", function () {
   const brainId = localStorage.getItem("brainId");
-  sendMessages(MessageInput.value, brainId, JSON.parse(localStorage.getItem("userDetails")).name);
+  sendMessages(
+    MessageInput.value,
+    brainId,
+    JSON.parse(localStorage.getItem("userDetails")).name
+  );
   MessageInput.value = "";
 });
 
@@ -545,7 +595,7 @@ async function LoadMessages() {
     const data = JSON.parse(localStorage.getItem("userDetails"));
     const url = `${HOST}/history?phone=${data.contact}`;
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, {mode:'no-cors', referrerPolicy: 'strict-origin-when-cross-origin'});
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -554,7 +604,10 @@ async function LoadMessages() {
       const data = await response.json();
       const historyMessages = data.history;
       historyMessages.map(async (chat) => {
-        const formattedMessage = await chat.role === "assistant" ? marked(chat.content) : chat.content.toString();
+        const formattedMessage =
+          (await chat.role) === "assistant"
+            ? marked(chat.content)
+            : chat.content.toString();
         messagesData.push({
           user: chat.role === "assistant" ? "bot" : "user",
           message:
@@ -603,8 +656,8 @@ function saveUserDetails(e) {
   const email = document.getElementById("email").value;
   const contact = document.getElementById("contact").value;
   const url = `${HOST}/saveuser?phone=${contact}&name=${name}&email=${email}`;
-  if (email !== "" && contact !== ""&& name !== "") {
-    const res = fetch(url);
+  if (email !== "" && contact !== "" && name !== "") {
+    const res = fetch(url, { mode: "no-cors" });
     const userDetails = {
       name: name,
       email: email,
@@ -634,7 +687,7 @@ async function Clearhistory() {
   const URL = `${HOST}/clear_history?phone=${
     JSON.parse(localStorage.getItem("userDetails")).contact
   }`;
-  const res = await fetch(URL);
+  const res = await fetch(URL, { mode: "no-cors" });
 }
 
 document.getElementById("clearCache").addEventListener("click", Clearhistory);
