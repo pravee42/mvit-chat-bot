@@ -393,7 +393,9 @@ const MessageInput = document.querySelector("#MessageInput");
 
 const MessageList = document.querySelector("#MessageList");
 
-const HOST = "https://mita-mvit-backend.hf.space";
+// const HOST = "https://mita-mvit-backend.hf.space";
+
+const HOST = "https://mita-eng-relay.onrender.com"
 
 const userDetails = localStorage.getItem("userDetails")
   ? localStorage.getItem("userDetails")
