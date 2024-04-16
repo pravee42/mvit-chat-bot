@@ -104,7 +104,7 @@ function renderHTML() {
     <form id="form" class="inputbox">
       <input type="text" id="MessageInput" placeholder="Type your questions here" />
       <div id="loader" class="absolute w-[30px] h-[30px] right-20 hidden">
-        <img src="./images/loader.gif" alt="Loader" />
+        <img src="https://mvit-chat-bot.vercel.app/images/logo.png" alt="Loader" />
       </div>
       <button id="sendbtn" class="button22 hover:shadow hover:shadow-xl">
         <i class="bi bi-send text-white"></i>
@@ -497,7 +497,7 @@ const displayMessages = async () => {
       const image = document.createElement("img");
       image.setAttribute(
         "src",
-        data.user === "bot" ? "./images/logo.png" : userAvatar
+        data.user === "bot" ? "https://mvit-chat-bot.vercel.app/images/logo.png" : userAvatar
       );
       image.classList.add("rounded-full");
 
